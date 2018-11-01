@@ -33,7 +33,7 @@ client.get('search', {
     let places = countPlaces(books)
     let cleanPlaces = placeCleaner(places)
     let uniquePlaces = places.filter(onlyUnique)
-    console.log('unique', uniquePlaces)
+    // console.log('unique', uniquePlaces)
 
   })
   .catch(err => console.log(err))
@@ -64,22 +64,19 @@ function makeBookObject(book) {
     place: places
   }
   books.push(bookObject)
-  // console.log(places)
-
 }
 
-function countBooks(books){
 
-  console.log("aantal boeken", books.length)
-}
 function countPlaces(books){
   let places = []
   books.forEach(function(book){
-    if (book.place.length === 1){
+    if (book.place.length === 1 && book.place[0] != undefined){
     places.push(book.place[0])
     } else{
-    book.place.forEach(items=>{
-      places.push(items)
+    book.place.forEach(item=>{
+      if (item != undefined){
+        places.push(item)
+      }
     })
     }
   })
@@ -89,10 +86,10 @@ function countPlaces(books){
 
 function placeCleaner(places){
   let cleanPlaces = []
-  cleanPlaces.push(places.forEach(function(place){
-    // console.log("place", place)
-    // place.replace("[","")
-  }))
+
+  // cleanPlaces.push(places.forEach(function(place){
+  //   console.log("place", place)
+  // }))
   // console.log(cleanPlaces)
   // console.log(places)
 }
