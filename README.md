@@ -49,6 +49,28 @@ What seemed interesting to me was place where books were published i.e. the plac
 ### Where were the books currently in the OBA Oosterdok holding published?
 With this question in mind I wrote a couple of subquestions:
 - [x] How will I get only the publisher information? 
+```js
+client.get('search', {
+    q: 'H',
+    sort: 'title',
+    refine: true,
+    branch: 'OBA Oosterdok'
+
+  })
+  .then(results =>
+    JSON.parse(results).aquabrowser.results.result.forEach(function(book) {
+      makeBookObject(book)
+    })
+  )
+  .then(function(){
+    let places = countPlaces(books)
+    })
+  .catch(err => console.log(err))
+   function makeBookObject(book) {
+  let publishers = (typeof book.publication === "undefined" || typeof book.publication.publishers == undefined ) ? "UNKNOWN" : book.publication.publishers.publisher
+  console.log(publishers)
+  }
+```
 - [x] How will I handle books without any or with multiple places?
 - [ ] How will I clean up the values of the places if they are impure?
 - [ ] How will I calculate and store the times a book has been published in a certain city?
