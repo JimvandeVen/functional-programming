@@ -96,6 +96,7 @@ client.get('search', {
 }
 ```
 This piece of code allows me to make contact with the OBA API. Then In the results provided by my query I call a function that gives the books without publisher information a default value. Then I check if the book has multiple different places where it was published. If so `push()` each one into `let places= []` of not so just `push()` the one place. Then I create an `Object` where I put all the places.  
+
 After this piece of code I need to make a single array wherein I put all the places so I can loop through them. This is something that is needed to later create a function that calculates the times a city is present in the books.
 ```js
 function totalPlaces(books){
