@@ -1,8 +1,8 @@
 # functional-programming
 ## Introduction
-In this project I am working together with the Openbare Bibliotheek Amsterdam(OBA). I am using the oba [API](https://github.com/rijkvanzanten/node-oba-api) made by Rijk van Zanten. In the end I will be making an interactive datavisualization with the data provided by the API. I am meant to write the code in, as much as possible, functional programming.
+In this project I am working together with the Openbare Bibliotheek Amsterdam(OBA). I am using the oba [API](https://github.com/rijkvanzanten/node-oba-api) made by Rijk van Zanten. In the end I will be making an interactive data visualization with the data provided by the API. I am meant to write the code in, as much as possible, functional programming.
 ## Exploring the API
-First I was looking at the API an what data is provided with several different querys. This was quite alot of data, to be honest. Too much to compress into a datavisualisation. So I had to narrow the search. I started looking at the different results that are returned for each book. Here are some examples:  
+First I was looking at the API an what data is provided with several different queries. This was quite alot of data, to be honest. Too much to compress into a data visualisation. So I had to narrow the search. I started looking at the different results that are returned for each book. Here are some examples:  
 ```
 id
 detail-page
@@ -47,7 +47,7 @@ After seeing all the different results I started thinking what might be interest
 ## Research question
 What seemed interesting to me was place where books were published i.e. the place the books were from. Also because this would make for an interesting visualization, making a map light up in the place where the books are more frequently published. I decided this would be better to plot with a single holding(OBA location) in mind. My question will thus be:
 ### Where were the books currently in the OBA Oosterdok holding published?
-With this question in mind I wrote a couple of subquestions:
+With this question in mind I wrote a couple of sub questions:
 - [x] How will I get only the publisher information? 
 - [x] How will I handle books without any or with multiple places?
 - [ ] How will I clean up the values of the places if they are impure?
@@ -116,4 +116,4 @@ function totalPlaces(books){
   return places
 }
 ```
-
+## Early drawings of the visualisation
