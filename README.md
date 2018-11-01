@@ -117,3 +117,4 @@ function totalPlaces(books){
 }
 ```
 ## Early drawings of the visualisation
+![Early Drawing](/images/early_drawing.jpg)
