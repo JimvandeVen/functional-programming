@@ -49,7 +49,19 @@ What seemed interesting to me was place where books were published i.e. the plac
 ### Where were the books currently in the OBA Oosterdok holding published?
 With this question in mind I wrote a couple of subquestions:
 - [x] How will I get only the publisher information? 
+- [x] How will I handle books without any or with multiple places?
+- [ ] How will I clean up the values of the places if they are impure?
+- [ ] How will I calculate and store the times a book has been published in a certain city?
+- [ ] How will i scale this prototype to work with every book in a OBA holding?
+- [ ] How will the visualisation actually look?
+- [ ] What extra knowledge can be obtained from this data?
+- [ ] What will the interactive part be in this visualisation?
 ```js
+const client = new OBA({
+  public: process.env.PUBLIC,
+  secret: process.env.SECRET
+})
+let books = []
 client.get('search', {
     q: 'H',
     sort: 'title',
@@ -62,19 +74,45 @@ client.get('search', {
       makeBookObject(book)
     })
   )
-  .then(function(){
-    let places = countPlaces(books)
-    })
   .catch(err => console.log(err))
-   function makeBookObject(book) {
+ function makeBookObject(book) {
   let publishers = (typeof book.publication === "undefined" || typeof book.publication.publishers == undefined ) ? "UNKNOWN" : book.publication.publishers.publisher
-  console.log(publishers)
+  let places= []
+  if (publishers.length && publishers !== "UNKNOWN"){
+    publishers.map(items =>{
+      let multiplePlaces = []
+      multiplePlaces.push(items.place)
+      multiplePlaces.forEach(place =>{
+        places.push(place)
+      })
+    })
+  } else {
+      places.push(publishers.place)
   }
+  bookObject = {
+    place: places
+  }
+  books.push(bookObject)
+}
 ```
-- [x] How will I handle books without any or with multiple places?
-- [ ] How will I clean up the values of the places if they are impure?
-- [ ] How will I calculate and store the times a book has been published in a certain city?
-- [ ] How will the visualisation actually look?
-- [ ] What extra knowledge can be obtained from this data?
-- [ ] What will the interactive part be in this visualisation?
+This piece of code allows me to make contact with the OBA API. Then In the results provided by my query I call a function that gives the books without publisher information a default value. Then I check if the book has multiple different places where it was published. If so `push()` each one into `let places= []` of not so just `push()` the one place. Then I create an `Object` where I put all the places.  
+After this piece of code I need to make a single array wherein I put all the places so I can loop through them. This is something that is needed to later create a function that calculates the times a city is present in the books.
+```js
+function totalPlaces(books){
+  let places = []
+  books.forEach(function(book){
+    if (book.place.length === 1 && book.place[0] != undefined){
+    places.push(book.place[0])
+    } else{
+    book.place.forEach(item=>{
+      if (item != undefined){
+        places.push(item)
+      }
+    })
+    }
+  })
+  console.log(places)
+  return places
+}
+```
 
