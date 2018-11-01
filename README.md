@@ -42,7 +42,7 @@ target-audiences
   target-audience
 ```
 
-After seeing all the different results I started thinking what might be interesting to me research.
+After seeing all the different results I started thinking what might be interesting for me to research.
 
 ## Research question
 What seemed interesting to me was place where books were published i.e. the place the books were from. Also because this would make for an interesting visualization, making a map light up in the place where the books are more frequently published. I decided this would be better to plot with a single holding(OBA location) in mind. My question will thus be:
