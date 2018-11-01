@@ -117,4 +117,5 @@ function totalPlaces(books){
 }
 ```
 ## Early drawings of the visualisation
+In the drawing below you can see what my early concept is of my data visualisation. I have to first learn about d3 before I make too many assumptions in the design. Even so, this is roughly my vision in the design. I am still debating about foreign books.
 ![Early Drawing](/images/early_drawing.jpg)
