@@ -7,9 +7,7 @@ const client = new OBA({
   secret: process.env.SECRET
 })
 
-  let books = []
-
-
+let books = []
 client.get('search', {
     q: 'H',
     sort: 'title',
@@ -30,7 +28,7 @@ client.get('search', {
   //   console.log('places', places)
   // })
   .then(function(){
-    let places = countPlaces(books)
+    let places = totalPlaces(books)
     let cleanPlaces = placeCleaner(places)
     let uniquePlaces = places.filter(onlyUnique)
     // console.log('unique', uniquePlaces)
@@ -42,7 +40,6 @@ client.get('search', {
 function makeBookObject(book) {
   let publishers = (typeof book.publication === "undefined" || typeof book.publication.publishers == undefined ) ? "UNKNOWN" : book.publication.publishers.publisher
   let places= []
-  // console.log(publishers)
   if (publishers.length && publishers !== "UNKNOWN"){
     publishers.map(items =>{
       // console.log(items.place)
@@ -67,7 +64,7 @@ function makeBookObject(book) {
 }
 
 
-function countPlaces(books){
+function totalPlaces(books){
   let places = []
   books.forEach(function(book){
     if (book.place.length === 1 && book.place[0] != undefined){
