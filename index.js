@@ -1,5 +1,6 @@
 const OBA = require('oba-api')
 const fs = require('fs')
+const d3 = require("d3")
 require('dotenv').config()
 
 const client = new OBA({
@@ -20,21 +21,14 @@ client.getAll('search', {
       makeBookObject(book)
     })
   )
-  // .then(function(){
-  //   let places = []
-  //   bookObject.map(function(books){
-  //     places.push(books.place)
-  //   })
-  //   console.log('places', places)
-  // })
   .then(function(){
     let places = totalPlaces(books)
     let cleanPlaces = placeCleaner(places)
     // console.log(cleanPlaces)
-    // console.log('unique', uniquePlaces)
 
     let placeFrequency = frequencyCalculator(cleanPlaces)
-    console.log(placeFrequency)
+    // fs.writeFile('myjsonfile.json', JSON.stringify(placeFrequency), 'utf8', function(){})
+    // console.log(placeFrequency)
 
   })
   .catch(err => {
@@ -103,8 +97,9 @@ function placeCleaner(places){
       cleanPlaces.push(place)
     }
   })
-  return cleanPlaces
   // console.log(cleanPlaces)
+
+  return cleanPlaces
 }
 
 function onlyUnique(value, index, self) {
@@ -112,13 +107,20 @@ function onlyUnique(value, index, self) {
 }
 
 function frequencyCalculator(cleanPlaces){
-
+    // console.log(cleanPlaces)
     let count = {}
     cleanPlaces.forEach(cleanPlace=>{
+      // console.log(cleanPlace)
       count[cleanPlace] = (count[cleanPlace]||0) + 1
+
   })
-  // console.log(count)
-  return count
+  let cityCounts = []
+  Object.entries(count).forEach(([key, value])=>{
+    cityCounts.push({name: key, value: value})
+  })
+
+  console.log(cityCounts)
+  // return counts
 
   // console.log("cleenPlaces", cleanPlaces)
   // console.log("uniquePlaces", uniquePlaces)
