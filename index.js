@@ -8,15 +8,15 @@ const client = new OBA({
 })
 
 let books = []
-client.get('search', {
-    q: 'H',
+client.getAll('search', {
+    q: 'h',
     sort: 'title',
     refine: true,
     branch: 'OBA Oosterdok'
 
   })
   .then(results =>
-    JSON.parse(results).aquabrowser.results.result.forEach(function(book) {
+    results.forEach(function(book) {
       makeBookObject(book)
     })
   )
@@ -30,36 +30,43 @@ client.get('search', {
   .then(function(){
     let places = totalPlaces(books)
     let cleanPlaces = placeCleaner(places)
-    let uniquePlaces = places.filter(onlyUnique)
+    // console.log(cleanPlaces)
     // console.log('unique', uniquePlaces)
 
-  })
-  .catch(err => console.log(err))
+    let placeFrequency = frequencyCalculator(cleanPlaces)
+    console.log(placeFrequency)
 
+  })
+  .catch(err => {
+    if (err.response) {
+      console.log(err.response.status, err.response.statusText)
+    } else {
+      console.log(err)
+    }
+  })
 
 function makeBookObject(book) {
-  let publishers = (typeof book.publication === "undefined" || typeof book.publication.publishers == undefined ) ? "UNKNOWN" : book.publication.publishers.publisher
+  let publishers = (typeof book == undefined || book.publication == undefined || typeof book.publication.publishers == undefined || typeof book.publication[0].publishers.publisher == undefined ) ? "UNKNOWN" : book.publication[0].publishers[0].publisher
+  // console.log(publishers)
   let places= []
-  if (publishers.length && publishers !== "UNKNOWN"){
+  if (publishers !== "UNKNOWN"){
+    let multiplePlaces = []
     publishers.map(items =>{
-      // console.log(items.place)
-      let multiplePlaces = []
-      multiplePlaces.push(items.place)
-      multiplePlaces.forEach(place =>{
-        places.push(place)
-        // console.log('place', place)
+      multiplePlaces.push(items.$.place)
+      // console.log(items.$.place)
+      multiplePlaces.forEach(multiplePlace =>{
+        places.push(multiplePlace)
       })
-      // places.push(multiplePlaces)
       // console.log(multiplePlaces)
-
     })
     // console.log('wel array',publishers)
   } else {
-      places.push(publishers.place)
+      places.push(publishers)
   }
   bookObject = {
     place: places
   }
+  // console.log("places", places)
   books.push(bookObject)
 }
 
@@ -77,20 +84,42 @@ function totalPlaces(books){
     })
     }
   })
-  console.log(places)
+  // console.log(places)
   return places
 }
 
 function placeCleaner(places){
   let cleanPlaces = []
+  places.forEach(place =>{
+    if (place.endsWith(" [etc.]") && place != undefined){
+      cleanPlaces.push(place.slice(0,-7))
 
-  // cleanPlaces.push(places.forEach(function(place){
-  //   console.log("place", place)
-  // }))
+    } else if (place.startsWith("[") && place.endsWith("]") && place != undefined){
+      cleanPlaces.push(place.slice(1, -1))
+
+    } else if(place.startsWith("[") && place != undefined){
+      cleanPlaces.push(place.slice(1))
+    } else if(place != undefined){
+      cleanPlaces.push(place)
+    }
+  })
+  return cleanPlaces
   // console.log(cleanPlaces)
-  // console.log(places)
 }
 
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
+}
+
+function frequencyCalculator(cleanPlaces){
+
+    let count = {}
+    cleanPlaces.forEach(cleanPlace=>{
+      count[cleanPlace] = (count[cleanPlace]||0) + 1
+  })
+  // console.log(count)
+  return count
+
+  // console.log("cleenPlaces", cleanPlaces)
+  // console.log("uniquePlaces", uniquePlaces)
 }
