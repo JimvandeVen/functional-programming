@@ -22,11 +22,14 @@ client.getAll('search', {
     })
   )
   .then(function(){
+    // let cleanObject = objectCleaner(books)
+    // console.log(cleanObject)
     let places = totalPlaces(books)
-    let cleanPlaces = placeCleaner(places)
-    // console.log(cleanPlaces)
-
-    let placeFrequency = frequencyCalculator(cleanPlaces)
+    let placeFrequency = frequencyCalculator(places)
+    console.log(books)
+    // let years = totalYears(books)
+    // let cleanYears = yearCleaner(years)
+    // let sortedCityCounts = citySorter(placeFrequency)
     // fs.writeFile('myjsonfile.json', JSON.stringify(placeFrequency), 'utf8', function(){})
     // console.log(placeFrequency)
 
@@ -40,29 +43,62 @@ client.getAll('search', {
   })
 
 function makeBookObject(book) {
-  let publishers = (typeof book == undefined || book.publication == undefined || typeof book.publication.publishers == undefined || typeof book.publication[0].publishers.publisher == undefined ) ? "UNKNOWN" : book.publication[0].publishers[0].publisher
-  // console.log(publishers)
-  let places= []
-  if (publishers !== "UNKNOWN"){
-    let multiplePlaces = []
+  // console.log(book)
+  let publishers = (typeof book == undefined || book.publication == undefined || typeof book.publication.publishers == undefined || typeof book.publication[0].publishers.publisher == undefined ) ? "Geen plaats van uitgave" : book.publication[0].publishers[0].publisher
+  let publisherYears = (typeof book == undefined || book.publication == undefined || typeof book.publication.publishers == undefined || typeof book.publication[0].publishers.publisher == undefined ) ? "Geen jaar van uitgave" : book.publication[0].publishers[0].publisher
+  // console.log(publisherYears)
+  let years = []
+  let places = []
+  if (publishers !== "Geen plaats van uitgave" && publisherYears != "Geen jaar van uitgave"){
     publishers.map(items =>{
-      multiplePlaces.push(items.$.place)
-      // console.log(items.$.place)
-      multiplePlaces.forEach(multiplePlace =>{
-        places.push(multiplePlace)
-      })
-      // console.log(multiplePlaces)
+      if (items.$.place != undefined && items.$.place.endsWith(" [etc.]") && items.$.place != 'Geen plaats van uitgave'){
+        places.push(items.$.place.slice(0,-7))
+
+      } else if (items.$.place != undefined && items.$.place.endsWith(" [etc.].") && items.$.place != 'Geen plaats van uitgave'){
+        places.push(items.$.place.slice(1, -8))
+
+      } else if (items.$.place != undefined && items.$.place.startsWith("[") && items.$.place.endsWith("]") &&  items.$.place != 'Geen plaats van uitgave'){
+        places.push(items.$.place.slice(1, -1))
+
+      } else if(items.$.place != undefined && items.$.place.startsWith("[") &&  items.$.place != 'Geen plaats van uitgave'){
+        places.push(items.$.place.slice(1))
+      } else if(items.$.place != undefined && items.$.place != 'Geen plaats van uitgave'){
+        places.push(items.$.place)
+      }
+      if (items.$.year != undefined && items.$.year.startsWith("[") && items.$.year.endsWith("]") &&  items.$.year != 'Geen jaar van uitgave'){
+        years.push(items.$.year.slice(1, -1))
+      }else if (items.$.year != undefined && items.$.year.includes("cm")) {
+        years.push(items.$.year.slice(0,4))
+      }else if (items.$.year != undefined && items.$.year.includes("-")) {
+        years.push(items.$.year.slice(-4))
+      }else if (items.$.year != undefined) {
+        years.push(items.$.year.slice(0,4))
+      }
+
     })
-    // console.log('wel array',publishers)
   } else {
       places.push(publishers)
+      years.push(publisherYears)
+
   }
   bookObject = {
-    place: places
+    place: places,
+    year: years
   }
-  // console.log("places", places)
-  books.push(bookObject)
+
+  if (bookObject.place != "Geen plaats van uitgave" && bookObject.year != "Geen jaar van uitgave" && bookObject.place.length == 1){
+    books.push(bookObject)
+  }
 }
+
+// function objectCleaner(books){
+//   books.forEach((book, index)=>{
+//     console.log(book.place)
+//     // book.place = book.place.replace(/^\((.+)\)$/,"[$1]")
+//   })
+//
+//
+// }
 
 
 function totalPlaces(books){
@@ -82,30 +118,6 @@ function totalPlaces(books){
   return places
 }
 
-function placeCleaner(places){
-  let cleanPlaces = []
-  places.forEach(place =>{
-    if (place.endsWith(" [etc.]") && place != undefined){
-      cleanPlaces.push(place.slice(0,-7))
-
-    } else if (place.startsWith("[") && place.endsWith("]") && place != undefined){
-      cleanPlaces.push(place.slice(1, -1))
-
-    } else if(place.startsWith("[") && place != undefined){
-      cleanPlaces.push(place.slice(1))
-    } else if(place != undefined){
-      cleanPlaces.push(place)
-    }
-  })
-  // console.log(cleanPlaces)
-
-  return cleanPlaces
-}
-
-function onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
-}
-
 function frequencyCalculator(cleanPlaces){
     // console.log(cleanPlaces)
     let count = {}
@@ -119,9 +131,16 @@ function frequencyCalculator(cleanPlaces){
     cityCounts.push({name: key, value: value})
   })
 
-  console.log(cityCounts)
-  // return counts
+  // console.log(cityCounts)
+  return cityCounts
 
   // console.log("cleenPlaces", cleanPlaces)
   // console.log("uniquePlaces", uniquePlaces)
 }
+
+
+// function citySorter(placeFrequency){
+//
+//   keysSorted = Object.keys(placeFrequency).sort(function(a,b){return placeFrequency[a]-placeFrequency[b]})
+//   console.log(keysSorted);
+// }

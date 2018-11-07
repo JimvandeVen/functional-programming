@@ -4,11 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet' />
   <title>Document</title>
 </head>
 <body>
-  <p>sdfwfsg</p>
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-  <script src="src/index.js"></script>
+  <div id='map' style='width: 400px; height: 300px;'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiamltdmFuZGV2ZW4iLCJhIjoiY2pvNzZmZmtzMG9jMTN2bzFmcG12MHlrZiJ9.WRiELqCFy3TaCQAWaXxSHA';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v9'
+});
+</script>
 </body>
 </html>
