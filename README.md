@@ -180,4 +180,11 @@ function frequencyCalculator(books){
 }
 ```
 
-## Still to do
+### How will the visualisation actually look?
+For the my process in creating the visualisation you can look on [Observable](https://beta.observablehq.com/@jimvandeven/d3-horizontal-bar-chart).
+
+
+## Still to do (If I had more time!!)
+- [ ] Plot my data on a map using leaflet or something similar
+- [ ] Get my tooltip a littlebit better
+- [ ] Run d3 on a server in my local host
