@@ -10,7 +10,7 @@ const client = new OBA({
 
 let books = []
 client.getAll('search', {
-    q: 'h',
+    q: 'book',
     sort: 'title',
     refine: true,
     branch: 'OBA Oosterdok'
@@ -22,17 +22,7 @@ client.getAll('search', {
     })
   )
   .then(function(){
-    // let cleanObject = objectCleaner(books)
-    // console.log(cleanObject)
-    let places = totalPlaces(books)
-    let placeFrequency = frequencyCalculator(places)
-    console.log(books)
-    // let years = totalYears(books)
-    // let cleanYears = yearCleaner(years)
-    // let sortedCityCounts = citySorter(placeFrequency)
-    // fs.writeFile('myjsonfile.json', JSON.stringify(placeFrequency), 'utf8', function(){})
-    // console.log(placeFrequency)
-
+    let cityCounts = frequencyCalculator(books)
   })
   .catch(err => {
     if (err.response) {
@@ -43,10 +33,8 @@ client.getAll('search', {
   })
 
 function makeBookObject(book) {
-  // console.log(book)
   let publishers = (typeof book == undefined || book.publication == undefined || typeof book.publication.publishers == undefined || typeof book.publication[0].publishers.publisher == undefined ) ? "Geen plaats van uitgave" : book.publication[0].publishers[0].publisher
   let publisherYears = (typeof book == undefined || book.publication == undefined || typeof book.publication.publishers == undefined || typeof book.publication[0].publishers.publisher == undefined ) ? "Geen jaar van uitgave" : book.publication[0].publishers[0].publisher
-  // console.log(publisherYears)
   let years = []
   let places = []
   if (publishers !== "Geen plaats van uitgave" && publisherYears != "Geen jaar van uitgave"){
@@ -56,10 +44,8 @@ function makeBookObject(book) {
 
       } else if (items.$.place != undefined && items.$.place.endsWith(" [etc.].") && items.$.place != 'Geen plaats van uitgave'){
         places.push(items.$.place.slice(1, -8))
-
       } else if (items.$.place != undefined && items.$.place.startsWith("[") && items.$.place.endsWith("]") &&  items.$.place != 'Geen plaats van uitgave'){
         places.push(items.$.place.slice(1, -1))
-
       } else if(items.$.place != undefined && items.$.place.startsWith("[") &&  items.$.place != 'Geen plaats van uitgave'){
         places.push(items.$.place.slice(1))
       } else if(items.$.place != undefined && items.$.place != 'Geen plaats van uitgave'){
@@ -74,73 +60,32 @@ function makeBookObject(book) {
       }else if (items.$.year != undefined) {
         years.push(items.$.year.slice(0,4))
       }
-
     })
   } else {
       places.push(publishers)
       years.push(publisherYears)
-
   }
   bookObject = {
     place: places,
-    year: years
+    year: Number(years)
   }
-
   if (bookObject.place != "Geen plaats van uitgave" && bookObject.year != "Geen jaar van uitgave" && bookObject.place.length == 1){
     books.push(bookObject)
   }
 }
 
-// function objectCleaner(books){
-//   books.forEach((book, index)=>{
-//     console.log(book.place)
-//     // book.place = book.place.replace(/^\((.+)\)$/,"[$1]")
-//   })
-//
-//
-// }
-
-
-function totalPlaces(books){
-  let places = []
-  books.forEach(function(book){
-    if (book.place.length === 1 && book.place[0] != undefined){
-    places.push(book.place[0])
-    } else{
-    book.place.forEach(item=>{
-      if (item != undefined){
-        places.push(item)
-      }
-    })
+function frequencyCalculator(books){
+  let count = {}
+  books.forEach(book=>{
+    count[book.place] = {
+      count: ((count[book.place] && count[book.place].count)||0) + 1,
+      years: ((count[book.place] && count[book.place].years.concat(book.year))||[book.year])
     }
-  })
-  // console.log(places)
-  return places
-}
-
-function frequencyCalculator(cleanPlaces){
-    // console.log(cleanPlaces)
-    let count = {}
-    cleanPlaces.forEach(cleanPlace=>{
-      // console.log(cleanPlace)
-      count[cleanPlace] = (count[cleanPlace]||0) + 1
-
   })
   let cityCounts = []
   Object.entries(count).forEach(([key, value])=>{
-    cityCounts.push({name: key, value: value})
-  })
+     cityCounts.push({place: key, bookCount: value})
+   })
 
-  // console.log(cityCounts)
   return cityCounts
-
-  // console.log("cleenPlaces", cleanPlaces)
-  // console.log("uniquePlaces", uniquePlaces)
 }
-
-
-// function citySorter(placeFrequency){
-//
-//   keysSorted = Object.keys(placeFrequency).sort(function(a,b){return placeFrequency[a]-placeFrequency[b]})
-//   console.log(keysSorted);
-// }
