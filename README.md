@@ -160,7 +160,7 @@ Object = {
   ]
 }
 ```
-To produce this beautiful piece of data I had to dig deep. First I create an empty `object`. Then I loop through all the books and make an `object` that is inserted into that empty object. To get the number of books published in a certain city I use: `count: ((newBookObject[book.place] && newBookObject[book.place].count)||0) + 1` Here I check if `book.place` and `book.place.count` exist or are 0 and if so I add 1 to count. Then to add all the years to the city I use this code `years: ((newBookObject[book.place] && newBookObject[book.place].years.concat(book.year))||[book.year])` Here i Check if `book.place` exists and if `book.place.years` exists. If so `concat(book.year)` else add `book.year`  
+To produce this beautiful piece of data I had to dig deep. First I create an empty `object`. Then I loop through all the books and make an `object` that is inserted into that empty object. To get the number of books published in a certain city I use: `count: ((newBookObject[book.place] && newBookObject[book.place].count)||0) + 1` Here I check if `book.place` and `book.place.count` exist or are 0 and if so I add 1 to count. Then to add all the years to the city I use this code: `years: ((newBookObject[book.place] && newBookObject[book.place].years.concat(book.year))||[book.year])` Here i Check if `book.place` exists and if `book.place.years` exists. If so `concat(book.year)` else add `book.year`  
 ```js
 function frequencyCalculator(books){
   let newBookObject = {}
