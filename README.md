@@ -1,4 +1,4 @@
-# functional-programming
+# Functional-Programming
 ## Introduction
 In this project I am working together with the Openbare Bibliotheek Amsterdam(OBA). I am using the oba [API](https://github.com/rijkvanzanten/node-oba-api) made by Rijk van Zanten. In the end I will be making an interactive data visualization with the data provided by the API. I am meant to write the code in, as much as possible, functional programming.
 ## Visualisation
