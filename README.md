@@ -58,6 +58,9 @@ With this question in mind I wrote a couple of sub questions:
 - [x] How will the visualisation actually look?
 - [x] What extra knowledge can be obtained from this data?
 - [x] What will the interactive part be in this visualisation?
+
+### How will I get only the publisher information? How will I handle books without any or with multiple places?
+This piece of code allows me to make contact with the OBA API. Then In the results provided by my query I call a function that gives the books without publisher information a default value. Then I check if the book has multiple different places where it was published. If so `push()` each one into `let places= []` of not so just `push()` the one place. Then I create an `Object` where I put all the places.
 ```js
 const client = new OBA({
   public: process.env.PUBLIC,
@@ -96,10 +99,10 @@ client.get('search', {
   }
   books.push(bookObject)
 }
-```
-This piece of code allows me to make contact with the OBA API. Then In the results provided by my query I call a function that gives the books without publisher information a default value. Then I check if the book has multiple different places where it was published. If so `push()` each one into `let places= []` of not so just `push()` the one place. Then I create an `Object` where I put all the places.  
+```  
+### How will I calculate and store the times a book has been published in a certain city?
 
-After this piece of code I need to make a single array wherein I put all the places so I can loop through them. This is something that is needed to later create a function that calculates the times a city is present in the books.
+After the above piece of code I need to make a single array wherein I put all the places so I can loop through them. This is something that is needed to later create a function that calculates the times a city is present in the books.
 ```js
 function totalPlaces(books){
   let places = []
@@ -123,4 +126,4 @@ In the drawing below you can see what my early concept is of my data visualisati
 ![Early Drawing](/images/early_drawing.jpg)
 
 After playing around with d3 for a while I found that plotting my data on a map was a bit too difficult to achieve in one week of learning d3. So I toned my visualisation down, but added a third variable. Now I will plot the number of publications per city, show the average publication year of that city and show all the different publication years in a list.
-![Early Drawing](/images/shets2.jpg)
+![Early Drawing 2](/images/shets2.jpg)
