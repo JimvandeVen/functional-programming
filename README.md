@@ -123,4 +123,4 @@ In the drawing below you can see what my early concept is of my data visualisati
 ![Early Drawing](/images/early_drawing.jpg)
 
 After playing around with d3 for a while I found that plotting my data on a map was a bit too difficult to achieve in one week of learning d3. So I toned my visualisation down, but added a third variable. Now I will plot the number of publications per city, show the average publication year of that city and show all the different publication years in a list.
-![Early Drawing](/images/early_drawing.jpg)
+![Early Drawing](/images/shets2.jpg)
