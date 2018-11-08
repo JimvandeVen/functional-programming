@@ -8,6 +8,7 @@ In this project I am working together with the Openbare Bibliotheek Amsterdam(OB
 * [Exploring the API](#exploring-the-api)
 * [Research question](#research-question)
 * [Early drawings of the visualisation](#early-drawings-of-the-visualisation)
+* [Process](#process)
 * [Still to do](#still-to-do)
 
 ## Visualisation
@@ -68,6 +69,15 @@ With this question in mind I wrote a couple of sub questions:
 - [x] How will the visualisation actually look?
 - [x] What extra knowledge can be obtained from this data?
 - [x] What will the interactive part be in this visualisation?
+
+## Early drawings of the visualisation
+In the drawing below you can see what my early concept is of my data visualisation. I have to first learn about d3 before I make too many assumptions in the design. Even so, this is roughly my vision in the design. I am still debating about foreign books.
+![Early Drawing](/images/early_drawing.jpg)
+
+After playing around with d3 for a while I found that plotting my data on a map was a bit too difficult to achieve in one week of learning d3. So I toned my visualisation down, but added a third variable. Now I will plot the number of publications per city, show the average publication year of that city and show all the different publication years in a list.
+![Early Drawing 2](/images/shets2.jpg)
+
+## Process
 
 ### How will I get only the publisher information? How will I handle books without any or with multiple places?
 This piece of code allows me to make contact with the OBA API. Then In the results provided by my query I call a function that gives the books without publisher information a default value. Then I check if the book has multiple different places where it was published. If so `push()` each one into `let places= []` of not so just `push()` the one place. Then I create an `Object` where I put all the places.
@@ -131,11 +141,5 @@ function totalPlaces(books){
   return places
 }
 ```
-## Early drawings of the visualisation
-In the drawing below you can see what my early concept is of my data visualisation. I have to first learn about d3 before I make too many assumptions in the design. Even so, this is roughly my vision in the design. I am still debating about foreign books.
-![Early Drawing](/images/early_drawing.jpg)
-
-After playing around with d3 for a while I found that plotting my data on a map was a bit too difficult to achieve in one week of learning d3. So I toned my visualisation down, but added a third variable. Now I will plot the number of publications per city, show the average publication year of that city and show all the different publication years in a list.
-![Early Drawing 2](/images/shets2.jpg)
 
 ## Still to do
