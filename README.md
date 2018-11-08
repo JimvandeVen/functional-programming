@@ -1,8 +1,18 @@
 # Functional-Programming
 ## Introduction
 In this project I am working together with the Openbare Bibliotheek Amsterdam(OBA). I am using the oba [API](https://github.com/rijkvanzanten/node-oba-api) made by Rijk van Zanten. In the end I will be making an interactive data visualization with the data provided by the API. I am meant to write the code in, as much as possible, functional programming.
+
+## Table of content
+
+* [Visualisation](#visualisation)
+* [Exploring the API](#exploring-the-api)
+* [Research question](#research-question)
+* [Early drawings of the visualisation](#early-drawings-of-the-visualisation)
+* [Still to do](#still-to-do)
+
 ## Visualisation
 [Observable](https://beta.observablehq.com/@jimvandeven/d3-horizontal-bar-chart)
+
 ## Exploring the API
 First I was looking at the API an what data is provided with several different queries. This was quite alot of data, to be honest. Too much to compress into a data visualisation. So I had to narrow the search. I started looking at the different results that are returned for each book. Here are some examples:  
 ```
@@ -127,3 +137,5 @@ In the drawing below you can see what my early concept is of my data visualisati
 
 After playing around with d3 for a while I found that plotting my data on a map was a bit too difficult to achieve in one week of learning d3. So I toned my visualisation down, but added a third variable. Now I will plot the number of publications per city, show the average publication year of that city and show all the different publication years in a list.
 ![Early Drawing 2](/images/shets2.jpg)
+
+## Still to do
