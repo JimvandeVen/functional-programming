@@ -137,7 +137,7 @@ Object = {
     {
       city : "City Name",
       bookCount: {
-        count: 10,
+        count: 2,
         years: [
           1990,
           2001
@@ -147,30 +147,36 @@ Object = {
     {
       city : "City Name",
       bookCount: {
-        count: 10,
+        count: 5,
         years: [
           1990,
-          2001
+          2001,
+          1999,
+          1998,
+          2030
         ]
       }
     }
   ]
-}``` 
+}
+```
+To produce this beautiful piece of data I had to dig deep. First I create an empty `object`. Then I loop through all the books and make an `object` that is inserted into that empty object. To get the number of books published in a certain city I use: `count: ((newBookObject[book.place] && newBookObject[book.place].count)||0) + 1` Here I check if `book.place` and `book.place.count` exist or are 0 and if so I add 1 to count. Then to add all the years to the city I use this code `years: ((newBookObject[book.place] && newBookObject[book.place].years.concat(book.year))||[book.year])` Here i Check if `book.place` exists and if `book.place.years` exists. If so `concat(book.year)` else add `book.year`  
 ```js
 function frequencyCalculator(books){
-  let count = {}
+  let newBookObject = {}
   books.forEach(book=>{
-    count[book.place] = {
-      count: ((count[book.place] && count[book.place].count)||0) + 1,
-      years: ((count[book.place] && count[book.place].years.concat(book.year))||[book.year])
+    newBookObject[book.place] = {
+      count: ((newBookObject[book.place] && newBookObject[book.place].count)||0) + 1,
+      years: ((newBookObject[book.place] && newBookObject[book.place].years.concat(book.year))||[book.year])
     }
   })
-  let cityCounts = []
-  Object.entries(count).forEach(([key, value])=>{
-     cityCounts.push({place: key, bookCount: value})
+  console.log(newBookObject)
+  let newBookArray = []
+  Object.entries(newBookObject).forEach(([key, value])=>{
+     newBookArray.push({place: key, bookCount: value})
    })
 
-  return cityCounts
+  return newBookArray
 }
 ```
 
