@@ -1,6 +1,8 @@
 # functional-programming
 ## Introduction
 In this project I am working together with the Openbare Bibliotheek Amsterdam(OBA). I am using the oba [API](https://github.com/rijkvanzanten/node-oba-api) made by Rijk van Zanten. In the end I will be making an interactive data visualization with the data provided by the API. I am meant to write the code in, as much as possible, functional programming.
+## Visualisation
+[Observable](https://beta.observablehq.com/@jimvandeven/d3-horizontal-bar-chart)
 ## Exploring the API
 First I was looking at the API an what data is provided with several different queries. This was quite alot of data, to be honest. Too much to compress into a data visualisation. So I had to narrow the search. I started looking at the different results that are returned for each book. Here are some examples:  
 ```
@@ -50,12 +52,12 @@ What seemed interesting to me was place where books were published i.e. the plac
 With this question in mind I wrote a couple of sub questions:
 - [x] How will I get only the publisher information? 
 - [x] How will I handle books without any or with multiple places?
-- [ ] How will I clean up the values of the places if they are impure?
-- [ ] How will I calculate and store the times a book has been published in a certain city?
-- [ ] How will i scale this prototype to work with every book in a OBA holding?
-- [ ] How will the visualisation actually look?
-- [ ] What extra knowledge can be obtained from this data?
-- [ ] What will the interactive part be in this visualisation?
+- [x] How will I clean up the values of the places if they are impure?
+- [x] How will I calculate and store the times a book has been published in a certain city?
+- [x] How will I scale this prototype to work with every book in a OBA holding?
+- [x] How will the visualisation actually look?
+- [x] What extra knowledge can be obtained from this data?
+- [x] What will the interactive part be in this visualisation?
 ```js
 const client = new OBA({
   public: process.env.PUBLIC,
@@ -118,4 +120,7 @@ function totalPlaces(books){
 ```
 ## Early drawings of the visualisation
 In the drawing below you can see what my early concept is of my data visualisation. I have to first learn about d3 before I make too many assumptions in the design. Even so, this is roughly my vision in the design. I am still debating about foreign books.
+![Early Drawing](/images/early_drawing.jpg)
+
+After playing around with d3 for a while I found that plotting my data on a map was a bit too difficult to achieve in one week of learning d3. So I toned my visualisation down, but added a third variable. Now I will plot the number of publications per city, show the average publication year of that city and show all the different publication years in a list.
 ![Early Drawing](/images/early_drawing.jpg)
