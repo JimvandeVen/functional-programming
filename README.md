@@ -82,7 +82,7 @@ After playing around with d3 for a while I found that plotting my data on a map 
 ### How will I get only the publisher information? How will I handle books without any or with multiple places? How will I clean up the values of the places if they are impure?
 This piece of code allows me to make contact with the OBA API. Then In the results provided by my query I call a function that gives the books without publisher information a default value. Then I check if the book has multiple different places where it was published. If so `push()` each one into `let places= []` of not so just `push()` the one place. Then I create an `Object` where I put all the places. I do this in a similar way with years.  
 
-The next hurdle was how to clean up the dirty data. This was quiete the job.. I had to make a failsave for each of the different typos and irregularities included in the data. I tried to do this with regular expressions, but it was to hard to wrap my head around at the moment. So I made a lot of if statements that check for faulty data before pushing the places and years in their respective arrays.
+The next hurdle was how to clean up the dirty data. This was quiet the job.. I had to make a failsafe for each of the different typos and irregularities included in the data. I tried to do this with regular expressions, but it was to hard to wrap my head around at the moment. So I made a lot of if statements that check for faulty data before pushing the places and years in their respective arrays.
 
 ```js
 function makeBookObject(book) {
@@ -186,5 +186,5 @@ For the my process in creating the visualisation you can look on [Observable](ht
 
 ## Still to do (If I had more time!!)
 - [ ] Plot my data on a map using leaflet or something similar
-- [ ] Get my tooltip a littlebit better
+- [ ] Get my tooltip a little bit better
 - [ ] Run d3 on a server in my local host
