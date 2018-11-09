@@ -12,7 +12,8 @@ In this project I am working together with the Openbare Bibliotheek Amsterdam(OB
 * [Still to do](#still-to-do)
 
 ## Visualisation
-[Observable](https://beta.observablehq.com/@jimvandeven/d3-horizontal-bar-chart)
+The complete visualisation can be found at [Observable](https://beta.observablehq.com/@jimvandeven/d3-horizontal-bar-chart).
+![chart](/images/chartscreen.png)
 
 ## Exploring the API
 First I was looking at the API an what data is provided with several different queries. This was quite alot of data, to be honest. Too much to compress into a data visualisation. So I had to narrow the search. I started looking at the different results that are returned for each book. Here are some examples:  
