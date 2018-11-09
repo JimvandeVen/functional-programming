@@ -86,6 +86,39 @@ This piece of code allows me to make contact with the OBA API. Then In the resul
 The next hurdle was how to clean up the dirty data. This was quiet the job.. I had to make a failsafe for each of the different typos and irregularities included in the data. I tried to do this with regular expressions, but it was to hard to wrap my head around at the moment. So I made a lot of if statements that check for faulty data before pushing the places and years in their respective arrays.
 
 ```js
+const OBA = require('oba-api')
+const fs = equire('fs')
+const d3 = require("d3")
+require('dotenv').config()
+
+const client = new OBA({
+  public: process.env.PUBLIC,
+  secret: process.env.SECRET
+})
+
+let books = []
+client.getAll('search', {
+    q: 'book',
+    sort: 'title',
+    refine: true,
+    branch: 'OBA Oosterdok'
+
+  })
+  .then(results =>
+    results.forEach(function(book) {
+      makeBookObject(book)
+    })
+  )
+  .then(function(){
+    let cityCounts = frequencyCalculator(books)
+  })
+  .catch(err => {
+    if (err.response) {
+      console.log(err.response.status, err.response.statusText)
+    } else {
+      console.log(err)
+    }
+  })
 function makeBookObject(book) {
   let publishers = (typeof book == undefined || book.publication == undefined || typeof book.publication.publishers == undefined || typeof book.publication[0].publishers.publisher == undefined ) ? "Geen plaats van uitgave" : book.publication[0].publishers[0].publisher
   let publisherYears = (typeof book == undefined || book.publication == undefined || typeof book.publication.publishers == undefined || typeof book.publication[0].publishers.publisher == undefined ) ? "Geen jaar van uitgave" : book.publication[0].publishers[0].publisher
