@@ -219,7 +219,7 @@ function frequencyCalculator(books){
 For the my process in creating the visualisation you can look on [Observable](https://beta.observablehq.com/@jimvandeven/d3-horizontal-bar-chart).
 
 
-## Still to do (If I had more time!!)
+## Still to do
 - [ ] Plot my data on a map using leaflet or something similar
 - [ ] Get my tooltip a little bit better
 - [ ] Run d3 on a server in my local host
